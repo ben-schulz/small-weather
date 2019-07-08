@@ -1,2 +1,5 @@
 # DO NOT CHECK IN YOUR CONFIG
 config.ini
+
+# autosaves
+*~
