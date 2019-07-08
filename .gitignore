@@ -3,3 +3,5 @@ config.ini
 
 # autosaves
 *~
+
+smallweather/__pycache__
