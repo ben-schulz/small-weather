@@ -1,4 +1,6 @@
 import os
+import json
+import datetime
 import configparser
 
 import tweepy
@@ -24,9 +26,26 @@ consumer_secret = config[ 'twitter_secrets' ][ 'consumer_secret' ]
 
 api = get_api_instance( consumer_token, consumer_secret )
 
-cursor = tweepy.Cursor( api.user_timeline, id='wicked_sleep' )
+userid = 'realDonaldTrump'
+record_count = 44000
+cursor = tweepy.Cursor( api.user_timeline, id=userid, tweet_mode='extended' )
 
 # this is just a sanity check,
 # to see if it's working
-print( next( iter( cursor.items( 10 ) ) ) )
 
+tweets = iter( cursor.items( record_count ) )
+
+results = []
+for t in tweets:
+    try:
+        d = t._json
+        d[ '__retrievedat__' ] = str( datetime.datetime.utcnow() )
+        results.append( d )
+
+    except Exception as e:
+        print( e )
+        break
+
+
+with open( 'dump.json', 'w' ) as f:
+    f.write( json.dumps( results ) )

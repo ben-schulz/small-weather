@@ -10,4 +10,4 @@ def get_api_instance( consumer_token, consumer_secret ):
 
     request_token = auth_handler.request_token
 
-    return tweepy.API( auth_handler )
+    return tweepy.API( auth_handler=auth_handler, wait_on_rate_limit=True )
